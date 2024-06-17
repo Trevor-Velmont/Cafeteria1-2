@@ -1,0 +1,617 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    /* Corrección en la fuente */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* background: linear-gradient(20deg, rgb(136, 31, 255) 40%, rgb(130, 126, 249)); */
+    background: #f2d9ab;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/*Parte de header*/
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background-color: #054922;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+header .logo {
+    font-size: 10px;
+    user-select: none;
+}
+
+header .logo img {
+    width: 25%;
+    height: 25%;
+}
+
+header .navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+header .navigation a:hover {
+    transform: scale(1.2);
+}
+
+header .navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #c59b5d;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+header .navigation a:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+header .navigation .btnLogin-popup {
+    width: 130px;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+
+header .navigation .btnLogin-popup:hover {
+    background: #c59b5d;
+    color: #054922;
+
+}
+
+
+
+/* --------------------css de formularios----------- */
+
+.wrapper {
+    position: relative;
+    margin: -20% 0;
+    width: 400px;
+    height: 440px;
+    background: transparent;
+    border: 2px solid rgba(225, 225, 225, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow:hidden;
+    transform: scale(0);
+    transition: transform .5s ease, height .2s ease;
+} 
+.wrapper.active-popup {
+    transform: scale(1);
+    margin-top: -10%;
+}
+
+.wrapper.active {
+    height: 620px;
+}
+
+.wrapper .form-box {
+    width: 100%;
+    padding: 40px;
+}
+
+.wrapper .form-box.login {
+    transition: transform .18s ease;
+    transform: translateX(0);
+}
+
+.wrapper.active .form-box.login {
+    transition: none;
+    transform: translateX(-400px);
+}
+
+.wrapper .form-box.register {
+    top: -1%;
+    position: absolute;
+    transition: none;
+    transform: translateX(400px);
+}
+
+.wrapper.active .form-box.register {
+    transition: transform .18s ease;
+    transform: translateX(0);
+}
+
+.wrapper .icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: #162938;
+    font-size: 2em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.form-box h2 {
+    font-size: 2em;
+    color: #162938;
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #162938;
+    margin: 30px 0;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #162938;
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.input-box input:focus~label,
+.input-box input:valid~label {
+    top: -5px;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #162938;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+
+.input-box .icon {
+    position: absolute;
+    right: 8px;
+    font-size: 1.2em;
+    color: #162938;
+    line-height: 57px;
+}
+
+.remember-forgot {
+    font-size: .9em;
+    color: #162938;
+    font-weight: 500;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remember-forgot label input {
+    accent-color: #162938;
+    margin-right: 3px;
+}
+
+.remember-forgot a {
+    color: #162938;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    width: 100%;
+    height: 45px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.login-register {
+    font-size: .9em;
+    color: #162938;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
+}
+
+.login-register p a {
+    color: #162938;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-register p a:hover {
+    text-decoration: underline;
+}
+
+.cargo {
+    background: none;
+    color: #162938;
+    font-weight: 500;
+    border-radius: 7px;
+}
+
+.cargo option {
+    background: #f2d9ab;
+    color: #162938;
+    font-weight: 500;
+}
+
+/* parte de menu despeglable */
+.sidebar {
+    position: fixed;
+    top: 16.4%;
+    height: calc(100% - 16.2%);
+    left: 0;
+    width: 78px;
+    background: #c59b5d;
+    padding: 6px 14px;
+    z-index: 99;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active {
+    width: 240px;
+}
+
+.sidebar .logoContent .logo {
+    color: #fff;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar .logoContent .logo img {
+    width: 100%;
+    max-width: 50px;
+    height: auto;
+}
+
+.sidebar.active .logoContent .logo {
+    opacity: 1;
+}
+
+.sidebar .logoContent .logo i {
+    font-size: 28px;
+    margin-right: 5px;
+}
+
+.sidebar.active .logoContent .logo {
+    opacity: 1;
+}
+
+.sidebar .logoContent .logo .logoName {
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.sidebar #btn {
+    position: absolute;
+    color: #fff;
+    left: 90%;
+    top: 6px;
+    left: 50%;
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    transform: translateX(-50%);
+}
+
+.sidebar.active #btn {
+    left: 90%;
+}
+
+.sidebar ul {
+    margin-top: 20px;
+}
+
+.sidebar ul li {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin: 0 5px;
+    margin: 0px 0px;
+    /* margin: 8px 0; */
+    list-style: none;
+    line-height: 50px;
+}
+
+.sidebar ul li .tooltip {
+    position: absolute;
+    left: 122px;
+    /* top: 50%; */
+    top: 0%;
+    /* transform: translateY(-50%); */
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+    height: 35px;
+    width: 122px;
+    background: #fff;
+    line-height: 35px;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: 0s;
+    opacity: 0;
+    pointer-events: none;
+    display: block
+}
+
+.sidebar.active ul li .tooltip {
+    display: block;
+    opacity: 0;
+}
+
+.sidebar.active ul li:hover .tooltip {
+    transition: all 0.5s ease;
+    opacity: 0;
+    top: 50%;
+}
+
+/* Parte existente para referencia */
+.sidebar ul li:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+    top: 50%;
+    transform: translate(-35%, -50%);
+}
+
+/* Añadir animación al icono de logout */
+/* .profileContent .profile #logOut {
+    position: relative;} */
+/* Asegura que el tooltip esté correctamente posicionado  */
+
+.profileContent .profile #logOut:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+    top: 50%;
+    transform: translate(-35%, -50%);
+    left: 110px;
+}
+
+/* Añadir tooltip para el logOut */
+.profileContent .profile #logOut .tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: 150%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+    height: 35px;
+    width: 100px;
+    background: #fff;
+    color: black;
+    line-height: 35px;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0s;
+}
+
+.sidebar ul li input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 12px;
+    outline: none;
+    border: none;
+    background: #1d1b31;
+    padding-left: 50px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.sidebar ul li .fa-magnifying-glass {
+    position: absolute;
+    z-index: 99;
+    color: #fff;
+    font-size: 22px;
+    transition: all 0.5s ease;
+}
+
+/* .sidebar ul li .fa-magnifying-glass:active{
+    background: #fff;
+    color: #1d1b31;
+} */
+.sidebar ul li .fa-magnifying-glass:hover {
+    background: #fff;
+    color: #1d1b31;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border-radius: 12px;
+    white-space: nowrap;
+    ;
+}
+
+.sidebar ul li a:hover {
+    transition: all 0.5s ease;
+    color: #11101d;
+    background-color: #fff;
+}
+
+.sidebar ul li i {
+    height: 50px;
+    min-width: 50px;
+    border-radius: 12px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.sidebar ul li a .linksName {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.active ul li a .linksName {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sidebar .profileContent {
+    position: absolute;
+    color: #fff;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.sidebar .profileContent .profile {
+    position: relative;
+    padding: 10px 6px;
+    height: 80px;
+    background: #fff;
+    transition: all 0.5s ease;
+    background: none;
+}
+
+.sidebar.active .profileContent .profile {
+    background: #1d1b31;
+}
+
+.sidebar .profileContent .profile .profileDetails {
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.sidebar.active .profileContent .profile .profileDetails {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sidebar .profileContent .profile .profileDetails img {
+    height: 60px;
+    width: auto;
+    /* objet-fit: cover; */
+    border-radius: 15px;
+}
+
+.sidebar .profileContent .profile .profileDetails .nameJob {
+    margin-left: 10px;
+}
+
+.sidebar .profileContent .profile .profileDetails .name {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.sidebar .profileContent .profile .profileDetails .job {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.profile #logOut {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+.sidebar .profile #logOut {
+    background: none;
+    background: #1d1b31;
+}
+
+.sidebar.active .profile #logOut {
+    left: 88%;
+    background: none;
+}
+
+.bx {
+    font-size: 26px;
+    margin-left: 2px;
+}
+
+.prueba {
+    width: 20px;
+    background: red;
+    height: 700px;
+    position: absolute;
+    margin-top: -30%;
+    margin-left: 100px;
+    margin-bottom: 20px;
+}
+
+
+toda esta mierda es css (estilos, diseño)

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/9371cd63b1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Catalogo.css') }}">
+    <title>Catalogo</title>
+</head>
+
+<body>
+    <div class="container">
+        {% if logged_in %}
+        <style>
+            .catalog {
+                display: block;
+            }
+        </style>
+        {% endif %}
+        <header>
+            <h2 class="logo"><img src="{{ url_for('static', filename='img/sena.png') }}" alt="logo"></h2>
+            <nav class="navigation">
+                <a href="#">Inicio</a>
+                <a href="#">Mision</a>
+                <a href="#">Vision</a>
+                <a href="#">contactanos</a>
+                {% if not logged_in %}
+                <button class="btnLogin-popup"
+                    onclick="document.querySelector('.wrapper').style.display = 'block'">Login</button>
+                {% endif %}
+            </nav>
+        </header>
+        <aside class="sidebar">
+            <div class="logoContent">
+                <div class="logo">
+                    <div class="logoName">Cafe Marquéz</div>
+                </div>
+                <i class="fa-solid fa-bars" id="btn"></i>
+            </div>
+            <ul class="navList">
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                        <span class="linksName">Productos</span>
+                    </a>
+                    <span class="tooltip">Productos</span>
+                </li>
+                <li class="catalog" style="display: {% if es_administrador %}block{% else %}none{% endif %}">
+                    <a href="#">
+                        <i class="fa-solid fa-box"></i>
+                        <span class="linksName">Catalogo</span>
+                    </a>
+                    <span class="tooltip">Catalogo</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-list-check'></i>
+                        <span class="linksName">Ordenes</span>
+                    </a>
+                    <span class="tooltip">Ordenes</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-phone"></i>
+                        <span class="linksName">Contactanos</span>
+                    </a>
+                    <span class="tooltip">Contactanos</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-globe"></i>
+                        <span class="linksName">Quienes somos</span>
+                    </a>
+                    <span class="tooltip">Quienes somos</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="linksName">Usuario</span>
+                    </a>
+                    <span class="tooltip">Usuario</span>
+                </li>
+            </ul>
+            <div class="profileContent">
+                <div class="profile">
+                    <div class="profileDetails">
+                        <div class="nameJob">
+                            <div class="name" id="Username">{{ user_name if user_name else 'Invitado' }}</div>
+                            <div class="job" id="Cargo-text">{{ cargo }}</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-right-from-bracket" id="logOut">
+                        <span class="tooltip">Cerrar sesión</span>
+                    </i>
+                </div>
+            </div>
+        </aside>
+        <!-- --------------------formulario de login y registro------------ -->
+        <div class="wrapper" style="display: none;">
+            <span class="icon-close" onclick="document.querySelector('.wrapper').style.display = 'none'">
+                <ion-icon name="close"></ion-icon>
+            </span>
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form action="{{ url_for('login') }}" method="POST">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" name="password" required>
+                        <label>Contraseña</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label><input type="checkbox">Remember me</label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="login-register">
+                        <p>Don’t have an account?<a href="#" class="register-link">Register</a></p>
+                    </div>
+                </form>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="form-box register">
+                <nav class="navbar">
+                    <h2>Registration</h2>
+                    <form action="{{ url_for('register') }}" method="POST">
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="person"></ion-icon></span>
+                            <input type="text" name="nombre" required>
+                            <label>Nombre</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                            <input type="email" name="email" required>
+                            <label>Email</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                            <input type="password" name="password" required>
+                            <label>Password</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="card"></ion-icon></span>
+                            <input type="text" name="Identidad" required>
+                            <label># Documento de Identidad</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="people"></ion-icon></span>
+                            <select name="cargo" id="cargo" class="cargo">
+                                <option value="Administrador">Administrador</option>
+                                <option value="Empleado">Empleado</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Register</button>
+                        <div class="login-register">
+                            <p>Already have an account?<a href="#" class="login-link">Login</a></p>
+                        </div>
+                    </form>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        document.getElementById('logOut').addEventListener('click', function () {
+            window.location.href = "{{ url_for('logout') }}";
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/cat-log-sig.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/login.js') }}"></script> -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
+
+
+<!-- </html>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/9371cd63b1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Catalogo.css') }}">
+    <title>Catalogo</title>
+</head>
+
+<body>
+    <div class="container">
+        {% if logged_in %}
+        <style>
+            .catalog {
+                display: block;
+            }
+        </style>
+        {% endif %}
+        <header>
+            <h2 class="logo"><img src="{{ url_for('static', filename='img/sena.png') }}" alt="logo"></h2>
+            <nav class="navigation">
+                <a href="#">Inicio</a>
+                <a href="#">Mision</a>
+                <a href="#">Vision</a>
+                <a href="#">contactanos</a>
+                {% if not logged_in %}
+                <button class="btnLogin-popup"
+                    onclick="document.querySelector('.wrapper').style.display = 'block'">Login</button>
+                {% endif %}
+            </nav>
+        </header>
+        <aside class="sidebar">
+            <div class="logoContent">
+                <div class="logo">
+                    <div class="logoName">Cafe Marquéz</div>
+                </div>
+                <i class="fa-solid fa-bars" id="btn"></i>
+            </div>
+            <ul class="navList">
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                        <span class="linksName">Productos</span>
+                    </a>
+                    <span class="tooltip">Productos</span>
+                </li>
+                <li class="catalog" style="display: {% if logged_in %}block{% else %}none{% endif %}">
+                    <a href="#">
+                        <i class="fa-solid fa-box"></i>
+                        <span class="linksName">Catalogo</span>
+                    </a>
+                    <span class="tooltip">Catalogo</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-list-check'></i>
+                        <span class="linksName">Ordenes</span>
+                    </a>
+                    <span class="tooltip">Ordenes</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-phone"></i>
+                        <span class="linksName">Contactanos</span>
+                    </a>
+                    <span class="tooltip">Contactanos</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-globe"></i>
+                        <span class="linksName">Quienes somos</span>
+                    </a>
+                    <span class="tooltip">Quienes somos</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="linksName">Usuario</span>
+                    </a>
+                    <span class="tooltip">Usuario</span>
+                </li>
+            </ul>
+            <div class="profileContent">
+                <div class="profile">
+                    <div class="profileDetails">
+                        <div class="nameJob">
+                            <div class="name" id="Username">{{ user_name if user_name else 'Invitado' }}</div>
+                            <div class="job" id="Cargo-text"></div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-right-from-bracket" id="logOut">
+                        <span class="tooltip">Cerrar sesión</span>
+                    </i>
+                </div>
+            </div>
+        </aside>
+         --------------------formulario de login y registro------------ 
+        <div class="wrapper" style="display: none;">
+            <span class="icon-close" onclick="document.querySelector('.wrapper').style.display = 'none'">
+                <ion-icon name="close"></ion-icon>
+            </span>
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form action="{{ url_for('login') }}" method="POST">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" name="password" required>
+                        <label>Contraseña</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label><input type="checkbox">Remember me</label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="login-register">
+                        <p>Don’t have an account?<a href="#" class="register-link">Register</a></p>
+                    </div>
+                </form>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="form-box register">
+                <nav class="navbar">
+                    <h2>Registration</h2>
+                    <form action="{{ url_for('register') }}" method="POST">
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="person"></ion-icon></span>
+                            <input type="text" name="nombre" required>
+                            <label>Nombre</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                            <input type="email" name="email" required>
+                            <label>Email</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                            <input type="password" name="password" required>
+                            <label>Password</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="card"></ion-icon></span>
+                            <input type="text" name="Identidad" required>
+                            <label># Documento de Identidad</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="people"></ion-icon></span>
+                            <select name="cargo" id="cargo" class="cargo">
+                                <option value="Administrador">Administrador</option>
+                                <option value="Empleado">Empleado</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Register</button>
+                        <div class="login-register">
+                            <p>Already have an account?<a href="#" class="login-link">Login</a></p>
+                        </div>
+                    </form>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        document.getElementById('logOut').addEventListener('click', function () {
+            window.location.href = "{{ url_for('logout') }}";
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/cat-log-sig.js') }}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html> -->
